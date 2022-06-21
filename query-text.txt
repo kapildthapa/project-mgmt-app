@@ -13,6 +13,10 @@ All queries saved here
   projects {
     name
     status
+    client {
+      name
+      email
+    }
   },
   project(id: "2") {
     id,
@@ -22,5 +26,59 @@ All queries saved here
     client {
       name
     }
+  }
+}
+
+// Mutation
+// Add a client
+mutation {
+  addClient(name:"Peter Parker", email: "spiderman@gmail.com", phone:"444-444-5555") {
+    id
+    name
+    email
+    phone
+  }
+}
+
+// Delete a client
+mutation {
+  deleteClient(id:"62b1efc395556d1fc9001e73") {
+    name
+  }
+}
+
+// Add a project
+mutation {
+  addProject(name: "Mobile App", description: "This is the description", status: new, clientId: "62b1edef56a7752ca38029b0") {
+    name
+    id
+  }
+}
+
+mutation {
+  addProject(name:"eCommerce Website", description:"This is a description", status: progress, clientId: "62b1eece56a7752ca38029b2") {
+    name
+    id
+    client {
+      name
+      email
+    }
+  }
+}
+
+// Delete a project
+mutation {
+  deleteProject(id: "62b21de911f16aa92ea97124") {
+    name
+    id
+  }
+}
+
+// Update a project
+mutation {
+  updateProject(id: "62b20f74e1828ef91ae76e30", name: "Mobile Application", status: completed) {
+    name
+    status
+    description
   }
 }
