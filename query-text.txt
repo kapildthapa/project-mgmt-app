@@ -1,0 +1,26 @@
+All queries saved here
+
+{
+  client(id: "1") {
+    id,
+    name,
+    email,
+    phone,
+  },
+  clients {
+    name,
+  },
+  projects {
+    name
+    status
+  },
+  project(id: "2") {
+    id,
+    name,
+    status,
+    description,
+    client {
+      name
+    }
+  }
+}
