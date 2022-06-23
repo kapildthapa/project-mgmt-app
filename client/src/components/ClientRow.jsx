@@ -2,18 +2,21 @@ import { FaTrash } from 'react-icons/fa';
 import { useMutation } from '@apollo/client';
 import { DELETE_CLIENT } from '../mutations/clientMutations';
 import { GET_CLIENTS } from '../queries/clientQueries';
+import { GET_PROJECTS } from '../queries/projectQueries.js';
 
 export default function ClientRow({ client }) {
   const [deleteClient] = useMutation(DELETE_CLIENT, {
-    variable: { id: client.id },
-    //refetchQueries: [{ query: GET_CLIENTS }],    // Approach one refetch query after delete
-    update(cache, { data: { deleteClient }}) {     // Another approach by caching the data and not refetching
-      const { clients } = cache.readQuery({ query: GET_CLIENTS });
-      cache.writeQuery({
-        query: GET_CLIENTS,
-        data: { clients: clients.filter(client => client.id !== deleteClient.id) },
-      });
-    }
+    variables: { id: client.id },
+    refetchQueries: [{ query: GET_CLIENTS }, { query: GET_PROJECTS }],
+    // update(cache, { data: { deleteClient } }) {
+    //   const { clients } = cache.readQuery({ query: GET_CLIENTS });
+    //   cache.writeQuery({
+    //     query: GET_CLIENTS,
+    //     data: {
+    //       clients: clients.filter((client) => client.id !== deleteClient.id),
+    //     },
+    //   });
+    // },
   });
 
   return (
